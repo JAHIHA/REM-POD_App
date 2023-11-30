@@ -16,15 +16,33 @@ namespace REM_POD_App.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetAll()
+        public IActionResult GetAll(string? orderBy = null)
         {
-            IEnumerable<Model> model = _data.GetAll();
-
-            if (model.ToList().Count == 0)
+            try
             {
-                return NotFound();
+
+
+                IEnumerable<Model> model;
+
+                if (string.IsNullOrEmpty(orderBy))
+                {
+                    model = _data.GetAll(orderBy);
+                }
+                else
+                {
+                    model = _data.GetAll();
+                }
+
+                if (model.ToList().Count == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(model);
             }
-            return Ok(model);
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
 
         }
@@ -59,7 +77,7 @@ namespace REM_POD_App.Controllers
             try
             {
                 Model model = _data.Add(value);
-                return Created($"api /[controller]/{model.Id}", model);
+                return Created($"api/[controller]/{model.Id}", model);
 
             }
             catch
@@ -88,7 +106,7 @@ namespace REM_POD_App.Controllers
             }
             catch
             {
-                throw new ArgumentException("ECould not update");
+                throw new ArgumentException("Could not update");
             }
         }
 
