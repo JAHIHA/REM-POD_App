@@ -42,7 +42,7 @@
         {
             if (Temperature <= -10 || Temperature > 30)
             {
-                throw new ArgumentException("Temperature must be between -10 and 30");
+                throw new ArgumentOutOfRangeException("Temperature must be between -10 and 30");
             }
         }
 
@@ -52,6 +52,12 @@
             {
                 throw new ArgumentException("Distance must not be closer then 3 meters");
             }
+        }
+
+        public void Validate()
+        {
+            ValidateTemp();
+            ValidateDist();
         }
 
     }
