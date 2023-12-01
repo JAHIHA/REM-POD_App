@@ -2,7 +2,7 @@
 
 namespace REM_POD_App.files
 {
-    public class Repository
+    public class ModelRepository
     {
         private readonly List<Model> _models = new List<Model>
         {
@@ -17,7 +17,7 @@ namespace REM_POD_App.files
         {
             return _models.FirstOrDefault(x => x.Id == id);
         }
-        public IEnumerable<Model> Get(string? orderBy= null)
+        public IEnumerable<Model> GetAll(string? orderBy= null)
         {
             IEnumerable<Model> result = new List<Model>(_models);
             if (orderBy != null)
@@ -65,7 +65,8 @@ namespace REM_POD_App.files
         }
         public Model Add(Model model)
         {
-            model.Validation();
+            // TODO 
+            //model.Validation();
             _models.Add(model);
             return model;
         }
