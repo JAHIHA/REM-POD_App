@@ -8,25 +8,17 @@
 
         public double Temperature { get; set; }
 
-
-        //Magnetometer retunere 3 tal
-        public double MagnetometerX { get; set; }
-
-        public double MagnetometerY { get; set; }
-
-        public double MagnetometerZ { get; set; }
+        public double Magnetometer { get; set; }
 
 
         public double Distance { get; set; }
 
-        public Model(int id, DateTime timeStamp, double temperature, double magnetometerX, double magnetometerY, double magnetometerZ, double distance)
+        public Model(int id, DateTime timeStamp, double temperature, double magnetometer, double distance)
         {
             Id = id;
             TimeStamp = timeStamp;
             Temperature = temperature;
-            MagnetometerX = magnetometerX;
-            MagnetometerY = magnetometerY;
-            MagnetometerZ = magnetometerZ;
+            Magnetometer = magnetometer;
             Distance = distance;
         }
 
@@ -35,16 +27,14 @@
             this.Id = 0;
             this.TimeStamp = DateTime.Now;
             this.Temperature = 0.0;
-            this.MagnetometerX = 0.0;
-            this.MagnetometerY = 0.0;
-            this.MagnetometerZ = 0.0;
+            this.Magnetometer = 0.0;
             this.Distance = 0.0;
 
         }
 
         public override string ToString()
         {
-            return $"Id = {Id}, Temperature = {Temperature}, MagnetometerX = {MagnetometerX}, MagnetometerY = {MagnetometerY}, MagnetometerZ = {MagnetometerZ}, Distance = {Distance}";
+            return $"Id = {Id}, Temperature = {Temperature}, Magnetometer = {Magnetometer}, Distance = {Distance}";
         }
 
 
