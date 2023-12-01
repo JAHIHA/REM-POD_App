@@ -45,8 +45,8 @@ namespace REM_POD_App.files.Tests
         {
             // test +30 og -10 temperatur
             validTempModel.ValidateTemp();
-            Assert.ThrowsException<ArgumentException>(() => tooHotModel.ValidateTemp());
-            Assert.ThrowsException<ArgumentException>(() => tooColdModel.ValidateTemp());
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => tooHotModel.ValidateTemp());
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => tooColdModel.ValidateTemp());
 
 
         }
@@ -59,5 +59,15 @@ namespace REM_POD_App.files.Tests
             Assert.ThrowsException<ArgumentException>(() => tooCloseModel.ValidateDist());
 
         }
+
+        [TestMethod()]
+        public void ValidateTest()
+        {
+            validmodel.Validate();
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => tooHotModel.ValidateTemp());
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => tooColdModel.ValidateTemp());
+            Assert.ThrowsException<ArgumentException>(() => tooCloseModel.ValidateDist());
+        }
+
     }
 }
