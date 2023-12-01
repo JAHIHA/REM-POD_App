@@ -13,39 +13,39 @@ namespace REM_POD_App.Controllers
             _data = repo;
         }
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetAll(string? orderBy = null)
-        {
-            try
-            {
+        //[HttpGet]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //public IActionResult GetAll(string? orderBy = null)
+        //{
+        //    try
+        //    {
 
 
-                IEnumerable<Model> model;
+        //        IEnumerable<Model> model;
 
-                if (string.IsNullOrEmpty(orderBy))
-                {
-                    model = _data.GetAll(orderBy);
-                }
-                else
-                {
-                    model = _data.GetAll();
-                }
+        //        //if (string.IsNullOrEmpty(orderBy))
+        //        //{
+        //        //    model = _data.GetAll(orderBy);
+        //        //}
+        //        //else
+        //        //{
+        //        //    model = _data.GetAll();
+        //        //}
 
-                if (model.ToList().Count == 0)
-                {
-                    return NotFound();
-                }
-                return Ok(model);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+        //    //    if (model.ToList().Count == 0)
+        //    //    {
+        //    //        return NotFound();
+        //    //    }
+        //    //    return Ok(model);
+        //    //}
+        //    catch (Exception e)
+        //    {
+        //        return BadRequest(e.Message);
+        //    }
 
 
-        }
+        //}
 
         [HttpGet]
         [Route("{id}")]
