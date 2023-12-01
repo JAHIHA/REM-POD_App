@@ -10,7 +10,7 @@ namespace REM_POD_App.DBcontext
         {
             optionsBuilder.UseSqlServer(Secret.GetConnectionString);
         }
-        public virtual DbSet<Model> model
+        public virtual DbSet<Model> Models
         {
             get; set;
         }
