@@ -5,10 +5,10 @@ namespace REM_POD_App.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class REM_POD_Controller : Controller
+    public class REM_POD_Controller : ControllerBase
     {
-        private Repository _data;
-        public REM_POD_Controller(Repository repo)
+        private IModelRepository _data;
+        public REM_POD_Controller(IModelRepository repo)
         {
             _data = repo;
         }
@@ -30,14 +30,14 @@ namespace REM_POD_App.Controllers
                 }
                 else
                 {
-                    model = _data.GetAll();
+                    model = _data.GetAll(null);
                 }
 
-if (model.ToList().Count == 0)
-{
-    return NotFound();
-}
-return Ok(model);
+                if (model.ToList().Count == 0)
+                {
+                   return NotFound();
+                 }
+                return Ok(model);
             }
             catch (Exception e)
             {

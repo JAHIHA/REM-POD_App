@@ -16,7 +16,7 @@ namespace REM_POD_App.files.Tests
         [TestInitialize]
         public void Init()
         {
-            _Mrepository = new ModelRepository(); 
+            _Mrepository = new ModelRepository(null); 
         }
         [TestMethod()]
         public void GetByIdTest()
@@ -30,10 +30,10 @@ namespace REM_POD_App.files.Tests
         {
             IEnumerable<Model> models = _Mrepository.GetAll();
             Assert.AreEqual(5, models.Count());
-            IEnumerable<Model> orderBy = _Mrepository.GetAll(orderBy: "TimeStamp-asc");
-            Assert.AreEqual(22, orderBy.First().Temperature);
-            IEnumerable<Model> orderBy = _Mrepository.GetAll(orderBy: "Temperature-asc");
-            Assert.AreEqual(2, orderBy.First().Magnetometer);
+            IEnumerable<Model> orderByTime = _Mrepository.GetAll(orderBy: "TimeStamp-asc");
+            Assert.AreEqual(22, orderByTime.First().Temperature);
+            IEnumerable<Model> orderByTemp = _Mrepository.GetAll(orderBy: "Temperature-asc");
+            Assert.AreEqual(2, orderByTemp.First().Magnetometer);
 
             IEnumerable<Model> defaultCase = _Mrepository.GetAll(orderBy: "InvalidOrder");
             Assert.IsNotNull(defaultCase);
@@ -56,7 +56,7 @@ namespace REM_POD_App.files.Tests
             Assert.IsNull(_Mrepository.Update(88, model)); 
             Assert.AreEqual(2, _Mrepository.Update(2, model).Id);
             Assert.AreEqual(5, _Mrepository.GetAll().Count());
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => _Mrepository.Update(1, _badModel);
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => _Mrepository.Update(1, _badModel));
         }
     }
 }

@@ -1,25 +1,27 @@
-﻿using static System.Reflection.Metadata.BlobBuilder;
+﻿using REM_POD_App.DBcontext;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace REM_POD_App.files
 {
-    public class ModelRepository
+    public class ModelRepository : IModelRepository
     {
-        private readonly List<Model> _models = new List<Model>
+
+      
+        private readonly REMcontext _db;
+
+        public ModelRepository(REMcontext db)
         {
-            new Model(1,DateTime.Now,22,5,2),
-            new Model(2,DateTime.Now,18,10,1),
-            new Model(3,DateTime.Now,0,11,3),
-            new Model(4,DateTime.Now,12,7,2),
-            new Model(5,DateTime.Now,-2,2,1),
-        };
+            _db = db;
+        }
+
         
         public Model GetById(int id)
         {
-            return _models.FirstOrDefault(x => x.Id == id);
+            return _db.Models.FirstOrDefault(x => x.Id == id);
         }
         public IEnumerable<Model> GetAll(string? orderBy= null)
         {
-            IEnumerable<Model> result = new List<Model>(_models);
+            IQueryable<Model> result = _db.Models;
             if (orderBy != null)
             {
                 orderBy= orderBy.ToLower();
@@ -60,14 +62,15 @@ namespace REM_POD_App.files
                         break; 
                 }
             }
-            return result; 
+            return result.ToList(); 
 
         }
         public Model Add(Model model)
         {
-            // TODO 
-            //model.Validation();
-            _models.Add(model);
+            
+            model.Validate();
+            _db.Models.Add(model);
+            _db.SaveChanges();
             return model;
         }
         public Model Update(int id, Model model)
@@ -83,6 +86,7 @@ namespace REM_POD_App.files
             existingModel.Temperature = model.Temperature;
             existingModel.Magnetometer = model.Magnetometer;
             existingModel.Distance = model.Distance;
+            _db.SaveChanges();
             return existingModel;
         }
 
