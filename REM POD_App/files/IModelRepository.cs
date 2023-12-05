@@ -7,6 +7,6 @@
 
         public Model Add(Model model);
 
-        public Model Update(int id, Model model);
+        public Model Delete(int id);
     }
 }

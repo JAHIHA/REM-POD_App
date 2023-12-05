@@ -88,15 +88,15 @@ namespace REM_POD_App.Controllers
         }
 
 
-        [HttpPut]
+        [HttpDelete]
         [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Put(int id, [FromBody] Model value)
+        public IActionResult Delete(int id)
         {
             try
             {
-                Model model = _data.Update(id, value);
+                Model model = _data.Delete(id);
                 if (model is not null)
                 {
                     return Ok(model);
