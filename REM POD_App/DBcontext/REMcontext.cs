@@ -10,6 +10,10 @@ namespace REM_POD_App.DBcontext
         {
             optionsBuilder.UseSqlServer(Secret.GetConnectionString);
         }
+        public REMcontext(DbContextOptions<REMcontext> options): base(options)
+        {
+                
+        }
         public virtual DbSet<Model> Models
         {
             get; set;

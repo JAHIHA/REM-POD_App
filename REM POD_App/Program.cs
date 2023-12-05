@@ -11,9 +11,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<REMcontext>(options =>
-      options.UseSqlServer(builder.Configuration.GetConnectionString(Secret.GetConnectionString)));
+
+var optionsBuilder = new DbContextOptionsBuilder<REMcontext>();
+optionsBuilder.UseSqlServer(Secret.GetConnectionString);
+REMcontext context = new REMcontext(optionsBuilder.Options);
+
 builder.Services.AddScoped<IModelRepository, ModelRepository>();
+
+
+builder.Services.AddDbContext<REMcontext>(options =>
+    options.UseSqlServer(Secret.GetConnectionString));
+
 
 var app = builder.Build();
 
