@@ -13,10 +13,12 @@
 
         public double Distance { get; set; }
 
-        public Model(int id, DateTime timeStamp, double temperature, double magnetometer, double distance)
+        private static int nextid{ get; set; }
+
+        public Model(  double temperature, double magnetometer, double distance)
         {
-            Id = id;
-            TimeStamp = timeStamp;
+            Id = nextid++;
+            TimeStamp = DateTime.Now;
             Temperature = temperature;
             Magnetometer = magnetometer;
             Distance = distance;

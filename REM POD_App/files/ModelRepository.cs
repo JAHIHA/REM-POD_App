@@ -73,21 +73,15 @@ namespace REM_POD_App.files
             _db.SaveChanges();
             return model;
         }
-        public Model Update(int id, Model model)
+        public Model Delete(int id)
         {
-            model.Validate(); 
-            Model existingModel= GetById(id);
-            if(existingModel==null)
+            Model model = GetById(id);
+            if (model == null)
             {
-                return null; 
-
+                return null;
             }
-            existingModel.TimeStamp = DateTime.Now;
-            existingModel.Temperature = model.Temperature;
-            existingModel.Magnetometer = model.Magnetometer;
-            existingModel.Distance = model.Distance;
-            _db.SaveChanges();
-            return existingModel;
+            _db.Models.Remove(model);
+            return model;
         }
 
     }
