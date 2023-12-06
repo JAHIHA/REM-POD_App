@@ -17,6 +17,7 @@ optionsBuilder.UseSqlServer(Secret.GetConnectionString);
 REMcontext context = new REMcontext(optionsBuilder.Options);
 
 builder.Services.AddScoped<IModelRepository, ModelRepository>();
+builder.Services.AddScoped<IModelRepository, ModelRepositoryDB>();
 
 
 builder.Services.AddDbContext<REMcontext>(options =>

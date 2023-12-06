@@ -1,40 +1,39 @@
 ﻿using REM_POD_App.DBcontext;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace REM_POD_App.files
 {
-    public class ModelRepository : IModelRepository
+    public class ModelRepositoryDB: IModelRepository
     {
 
-      
-        private readonly List<Model> _models= new List<Model>();
-        private int nextId = 0;
-        
+        private readonly REMcontext _db;
 
-        public ModelRepository()
+        public ModelRepositoryDB(REMcontext db)
         {
+            db.Database.EnsureCreated();
+            _db = db;
+        }
+
+
+        public Model GetById(int id)
+        {
+
+            return _db.Models.FirstOrDefault(x => x.Id == id);
             
         }
-
-        
-        public Model? GetById(int id)
+        public IEnumerable<Model> GetAll(string? orderBy = null)
         {
-            return _models.FirstOrDefault(x => x.Id == id);
-        }
-        public IEnumerable<Model> GetAll(string? orderBy= null)
-        {
-            IEnumerable<Model> result = new List<Model> ();
+            IQueryable<Model> result = _db.Models;
             if (orderBy != null)
             {
-                orderBy= orderBy.ToLower();
-                switch(orderBy)
+                orderBy = orderBy.ToLower();
+                switch (orderBy)
                 {
                     case "TimeStamp":
-                    case "TimeStamp-asc": 
+                    case "TimeStamp-asc":
                         result = result.OrderBy(_models => _models.TimeStamp);
                         break;
-                    case "timeStamp-desc": 
-                        result= result.OrderByDescending(_models => _models.TimeStamp);
+                    case "timeStamp-desc":
+                        result = result.OrderByDescending(_models => _models.TimeStamp);
                         break;
 
                     case "Temperature":
@@ -61,19 +60,18 @@ namespace REM_POD_App.files
                         result = result.OrderByDescending(_models => _models.Distance);
                         break;
                     default:
-                        break; 
+                        break;
                 }
             }
-            return result.ToList(); 
+            return result.ToList();
 
         }
         public Model Add(Model model)
         {
-            
+
             model.Validate();
-            nextId++;
-            model.Id =nextId;
-            _models.Add(model);
+            _db.Models.Add(model);
+            _db.SaveChanges();
             return model;
         }
         public Model Delete(int id)
@@ -83,9 +81,11 @@ namespace REM_POD_App.files
             {
                 return null;
             }
-            _models.Remove(model);
+            _db.Models.Remove(model);
+            _db.SaveChanges();
             return model;
         }
 
     }
+
 }

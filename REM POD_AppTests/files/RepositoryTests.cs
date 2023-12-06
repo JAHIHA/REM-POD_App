@@ -3,6 +3,7 @@ using REM_POD_App.files;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace REM_POD_App.files.Tests
         [TestInitialize]
         public void Init()
         {
-            _Mrepository = new ModelRepository(null); 
+            _Mrepository = new ModelRepository(); 
         }
         [TestMethod()]
         public void GetByIdTest()
@@ -50,13 +51,29 @@ namespace REM_POD_App.files.Tests
         }
 
         [TestMethod()]
-        public void UpdateTest()
+        public void DeleteTest()
         {
-            Model model = new Model() { Id = 3, TimeStamp = DateTime.Now, Temperature = 16, Magnetometer = 4, Distance = 2 };
-            Assert.IsNull(_Mrepository.Update(88, model)); 
-            Assert.AreEqual(2, _Mrepository.Update(2, model).Id);
-            Assert.AreEqual(5, _Mrepository.GetAll().Count());
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => _Mrepository.Update(1, _badModel));
+            
+            IEnumerable<Model> models = _Mrepository.GetAll();
+
+            
+            Assert.IsNotNull(models);
+            Assert.AreEqual<bool>(true, models.Count() > 0);
+
+            
+            Model somemodel = models.First<Model>();
+            int numOfModels = models.Count();
+
+            
+            Model? deletedModel = _Mrepository.Delete(somemodel.Id);
+
+            
+            Assert.AreEqual(numOfModels - 1, _Mrepository.GetAll().Count());
+            Model? modelFound = null;
+            
+            modelFound = _Mrepository.GetAll().FirstOrDefault(a => a.Id == deletedModel.Id);
+            
+            Assert.IsNull(modelFound);
         }
     }
 }

@@ -34,11 +34,7 @@ namespace REM_POD_App.files.Tests
             Assert.AreEqual("Id = 1, Temperature = 20,5, Magnetometer = 91,23, Distance = 3", str);
         }
 
-        [TestMethod()]
-        public void ValidateMagnetic()
-        {
-            //Test nødvendigt?
-        }
+       
 
         [TestMethod()]
         public void ValidateTemperature()
@@ -54,7 +50,7 @@ namespace REM_POD_App.files.Tests
         [TestMethod()]
         public void ValidateDistance()
         {
-            // min 3 meter
+            
             validDistModel.ValidateDist();
             Assert.ThrowsException<ArgumentException>(() => tooCloseModel.ValidateDist());
 
