@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using REM_POD_App.DBcontext;
 using REM_POD_App.files;
+using static System.Net.Mime.MediaTypeNames;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
